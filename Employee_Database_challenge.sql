@@ -31,7 +31,8 @@ WHERE (employees.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 ORDER BY employees.emp_no;
 
 SELECT * FROM retirement_titles;
-		
+-- Grader said that this one was good. 
+
 --Note: There are duplicate entries for some employees because they have switched titles over the years. 
 --Use the following instructions to remove these duplicates and keep only the most recent title of each employee.
 
@@ -48,16 +49,28 @@ SELECT * FROM retirement_titles;
 --SELECT DISTINCT ON (Location) Location, time, report
 --FROM  x_x
 --ORDER BY Location, time 
+# unique_titles needs to be corrected 
 
-SELECT DISTINCT ON (retirement_titles.emp_no) retirement_titles.emp_no,
-    retirement_titles.first_name,
-    retirement_titles.last_name,
-    retirement_titles.title,
-INTO unique_titles 
-FROM retirement_titles
-ORDER BY retirement_titles.emp_no, retirement_titles.emp_no DESC;
+--SELECT DISTINCT ON (retirement_titles.emp_no) retirement_titles.emp_no,
+    --retirement_titles.first_name,
+    --retirement_titles.last_name,
+   -- retirement_titles.title,
+--INTO unique_titles 
+--FROM retirement_titles
+--ORDER BY retirement_titles.emp_no, retirement_titles.emp_no DESC;
 
 SELECT * FROM unique_titles;
+
+## corrected unique_titles
+
+SELECT DISTINCT ON (emp_no) emp_no,
+first_name,
+last_name,
+title
+--INTO unique_titles 
+FROM retirement_titles
+WHERE to_date = ('9999-01-01')
+ORDER BY emp_no ASC;
 
 --Write another query in the Employee_Database_challenge.sql file to retrieve the number of employees by their most recent job title who are about to retire.
 --First, retrieve the number of titles from the Unique Titles table.
@@ -65,6 +78,8 @@ SELECT * FROM unique_titles;
 --Group the table by title, then sort the count column in descending order.
 --Export the Retiring Titles table as retiring_titles.csv and save it to your Data folder in the Pewlett-Hackard-Analysis folder.
 
+
+## This is the correct format but becasue my unique_titles was off this made my counts off. Its been corrected 
 SELECT unique_titles.count,
 	unique_titles.title 
 INTO retiring_titles
@@ -88,7 +103,10 @@ SELECT * FROM retiring_titles
 --Order the table by the employee number.
 --Export the Mentorship Eligibility table as mentorship_eligibilty.csv and save it to your Data folder in the Pewlett-Hackard-Analysis folder.
 
+## THis one needs to be corrected 
+#Where am i suppose to put this though (de.to_date = '9999-01-01')
 
+## THis one needs to be corrected 
 SELECT DISTINCT ON (employees.emp_no) employees.emp_no,
     employees.first_name, 
     employees.last_name, 
@@ -96,12 +114,14 @@ SELECT DISTINCT ON (employees.emp_no) employees.emp_no,
     dept_emp.from_date,
     dept_emp.to_date,
     titles.title
-INTO mentorship-eligibility
+--INTO mentorship-eligibility
 FROM employees 
 LEFT JOIN dept_emp 
 ON (employees.emp_no = dept_emp.emp_no)
 lEFT JOIN titles
 ON (titles.emp_no = employees.emp_no)
 WHERE (birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+AND (de.to_date = '9999-01-01')
 ORDER BY employees.emp_no;
 
+# I thnk we are good it ran and worked. 
