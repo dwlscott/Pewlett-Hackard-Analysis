@@ -125,3 +125,31 @@ AND (de.to_date = '9999-01-01')
 ORDER BY employees.emp_no;
 
 # I thnk we are good it ran and worked. 
+
+# two extra querys for the Analysis protion. 
+-- Joining unique tables and salaries 
+SELECT unique_titles.emp_no,
+	unique_titles.first_name,
+	unique_titles.last_name,
+	unique_titles.title,
+	salaries.salary
+INTO retiring_salaries
+FROM unique_titles
+LEFT JOIN salaries
+ON (unique_titles.emp_no = salaries.emp_no)
+ORDER BY unique_titles.emp_no;
+
+--Joining manager_info and salaries 
+SELECT manager_info.dept_no,
+	manager_info.dept_name,
+	manager_info.emp_no,
+	manager_info.last_name,
+	manager_info.from_date,
+	manager_info.to_date,
+	salaries.salary
+INTO manager_salaries
+FROM manager_info
+LEFT JOIN salaries
+ON (manager_info.emp_no = salaries.emp_no)
+ORDER BY manager_info.emp_no; 
+
